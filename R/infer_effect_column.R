@@ -160,7 +160,7 @@ infer_effect_column <-
                 #this is the opposite to what MSS expects so switch A1/A2 naming
                 #first get corrected names for allele columns then switch
                 data.table::setnames(sumstats_dt, toupper(names(sumstats_dt)))
-            for (headerI in seq_len(nrow(mapping_file))) {
+                for (headerI in seq_len(nrow(mapping_file))) {
                   un <- mapping_file[headerI, "UNCORRECTED"]
                   cr <- mapping_file[headerI, "CORRECTED"]
                   #note ambig_cols here not all col headers
