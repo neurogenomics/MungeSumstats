@@ -49,4 +49,6 @@ The chromosome fix also carries the earlier numeric 24-to-Y correction. The VCF 
 
 Regression tests are selected from upstream 1bbd148. Calls omit unsupported `dbSNP_tarball` arguments and explicitly supply the older internal `check_chr` arguments. Tests for excluded features are omitted.
 
-Local source parsing and direct checks of mitochondrial/Y chromosome normalization, mixed-case allele direction and zero/NA p-values pass. Full installed-package testing of this backport is pending. Earlier results for upstream 1.21.3 do not validate this adapted code.
+Local source parsing and direct checks of mitochondrial/Y chromosome normalization, mixed-case allele direction and zero/NA p-values pass. The first installed-package run found a VCF argument mismatch and missing copy isolation in reference-based allele inference. The corrected backport retains the older `vcf_url` argument and copies the input before the reference comparison. Full-suite revalidation is pending. Earlier results for upstream 1.21.3 do not validate this adapted code.
+
+The newer `vcf_urls` spelling from 4b5f2bc is not applicable to the older downloader and is excluded after validation. The old `vcf_url` spelling already matches its formal argument exactly.

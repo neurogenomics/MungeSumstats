@@ -142,7 +142,7 @@ infer_effect_column <-
           #use get_genome_build function for this
           if(isTRUE(on_ref_genome)){
             switch_req <- get_genome_build(
-              sumstats = sumstats_dt,
+              sumstats = data.table::copy(sumstats_dt),
               standardise_headers = TRUE,
               sampled_snps = sampled_snps,
               mapping_file = mapping_file,
