@@ -106,8 +106,11 @@ infer_effect_column <-
         if(length(fnd_allele_indicator)>0){
           message("Found direction from effect/frq column naming")
           #fnd_allele_indicator could be >1 so majority vote
-          a1_mtch <- sum(grepl("A1",fnd_allele_indicator))
-          a2_mtch <- sum(grepl("A2",fnd_allele_indicator))
+          fnd_alleles <- eff_frq_allele_matches$ALLELE[
+            match(toupper(fnd_allele_indicator),
+                  eff_frq_allele_matches$UNCORRECTED)]
+          a1_mtch <- sum(fnd_alleles == "A1")
+          a2_mtch <- sum(fnd_alleles == "A2")
           if(a2_mtch>=a1_mtch){
             message("Effect/frq column(s) relate to A2 in the sumstats")
             #this is what MSS expects so no action required
@@ -115,6 +118,7 @@ infer_effect_column <-
             message("Effect/frq column(s) relate to A1 in the sumstats")
             #this is the opposite to what MSS expects so switch A1/A2 naming
             #first get corrected names for allele columns then switch
+            data.table::setnames(sumstats_dt, toupper(names(sumstats_dt)))
             for (headerI in seq_len(nrow(mapping_file))) {
               un <- mapping_file[headerI, "UNCORRECTED"]
               cr <- mapping_file[headerI, "CORRECTED"]
@@ -155,7 +159,8 @@ infer_effect_column <-
                 #swap A1 and A2
                 #this is the opposite to what MSS expects so switch A1/A2 naming
                 #first get corrected names for allele columns then switch
-                for (headerI in seq_len(nrow(mapping_file))) {
+                data.table::setnames(sumstats_dt, toupper(names(sumstats_dt)))
+            for (headerI in seq_len(nrow(mapping_file))) {
                   un <- mapping_file[headerI, "UNCORRECTED"]
                   cr <- mapping_file[headerI, "CORRECTED"]
                   #note ambig_cols here not all col headers

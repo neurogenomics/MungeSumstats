@@ -210,6 +210,9 @@ get_genome_build <- function(sumstats,
       # need to take first alt from list to do this
       snp_loc_data[,alt_alleles := unlist(lapply(alt_alleles, 
                                                  function(x) x[[1]]))]
+      # Compare alleles in a consistent case.
+      sumstats_return <- make_allele_upper(sumstats_dt = sumstats, log_files = NA)
+      sumstats <- sumstats_return$sumstats_dt
       num_a1 <-
         nrow(snp_loc_data[sumstats, ,
                           on = c("SNP"="SNP","pos"="BP","seqnames"="CHR",
