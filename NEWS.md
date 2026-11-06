@@ -1,3 +1,11 @@
+## Unreleased bug-fix backports for 1.13.4
+
+* Backport upstream fixes for reference filtering, chromosome names, allele
+  inference, sample sizes, p-values, logging, VCF paths and chain-file handling.
+* Preserve the existing public API and runtime dependencies. The test suite
+  now requires testthat >= 3.1.7 for upstream regression-test mocks.
+* See `docs/backports-1.13.4.md` for source commits, exclusions and validation.
+
 ## CHANGES IN VERSION 1.13.3
 
 ### Bug fix

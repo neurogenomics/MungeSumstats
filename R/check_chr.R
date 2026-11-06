@@ -30,8 +30,10 @@ check_chr <- function(sumstats_dt,
   sumstats_dt[, CHR := gsub("ch", "", CHR, ignore.case = TRUE)]
   # Rename "23" to "X"
   sumstats_dt[, CHR := gsub("23", "X", CHR)]
-  # Rename "M" to "MT"
-  sumstats_dt[, CHR := gsub("M", "MT", CHR, ignore.case = TRUE)]
+  # Rename "24" to "Y"
+  sumstats_dt[, CHR := gsub("24", "Y", CHR)]
+  # Rename "M" to "MT" (anchored so "MT" doesn't become "MTT")
+  sumstats_dt[, CHR := gsub("^M$", "MT", CHR, ignore.case = TRUE)]
   # Make all chromosome names uppercase
   sumstats_dt[, CHR := toupper(CHR)]
 

@@ -38,12 +38,21 @@ standardise_header <- standardise_sumstats_column_headers_crossplatform <-
         column_headers <- names(sumstats_dt) 
         # load synonym mapping - internal data no loading
         # Go through each and get correct spelling
-        # allow for differing cases column names
+        # allow for differing cases column names, data.tables and lower case
+        # entries in user supplied mapping files (caller's object unchanged)
+        mapping_file <- as.data.frame(mapping_file)
         colnames(mapping_file) <- toupper(colnames(mapping_file))
+        mapping_file$UNCORRECTED <- toupper(mapping_file$UNCORRECTED)
         #get names for allele mared eff/frq columns
         eff_frq_allele_matches <- get_eff_frq_allele_combns()
         mapping_file <- rbind(mapping_file,
-                              as.data.frame(eff_frq_allele_matches))
+                              as.data.frame(eff_frq_allele_matches)[
+                                  , c("UNCORRECTED", "CORRECTED")])
+        # minor allele frequencies aren't allele specific so only use them for
+        # FRQ if no allele frequency (e.g. A1FREQ) is found
+        maf_rows <- mapping_file$UNCORRECTED %in% c("MAF", "MINOR_AF")
+        mapping_file <- rbind(mapping_file[!maf_rows, ],
+                              mapping_file[maf_rows, ])
         for (headerI in seq_len(nrow(mapping_file))) {
             un <- mapping_file[headerI, "UNCORRECTED"]
             cr <- mapping_file[headerI, "CORRECTED"]
