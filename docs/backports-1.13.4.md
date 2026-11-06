@@ -1,6 +1,6 @@
 # Bug-fix backports onto MungeSumstats 1.13.4
 
-This branch backports fixes from Al-Murphy/MungeSumstats through 1bbd148 (2 November 2026). It preserves the 1.13.4 public function arguments, runtime dependencies and reference-loading API. It does not include the optional reference cache.
+This branch backports fixes from Al-Murphy/MungeSumstats through 1bbd148 (2 November 2026). It preserves the 1.13.4 function argument names, runtime dependencies and reference-loading API. The `parse_logs()` default filename pattern is corrected to match the files the package writes. It does not include the optional reference cache.
 
 ## Scope
 
